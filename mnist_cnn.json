@@ -1,0 +1,6 @@
+{
+  "model": "CNN",
+  "accuracy": 0.9877,
+  "latency_sec": 103.24894094467163,
+  "params": 50186
+}

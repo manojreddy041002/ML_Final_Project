@@ -1,0 +1,9 @@
+{
+  "model": "Ollama:llava",
+  "accuracy": 0.5,
+  "n": 10,
+  "input_tokens": null,
+  "output_tokens": null,
+  "estimated_cost_usd": 0.0,
+  "latency_sec": 2350.4973390102386
+}

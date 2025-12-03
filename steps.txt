@@ -1,0 +1,22 @@
+| Step | Command / Action                                                                          |
+| ---- | ----------------------------------------------------------------------------------------- |
+| 1    | Download & install Ollama from [https://ollama.com/download](https://ollama.com/download) |
+| 2    | Test Ollama → `ollama run llama3`                                                         |
+| 3    | Pull the vision model → `ollama pull llava`                                               |
+| 4    | Check installed models → `ollama list`                                                    |
+| 5    | Run your MNIST script → `python .\mnist_vision_llm.py`                                    |
+
+-> pip install ollama
+-> python -m pip show ollama
+-> pip install torchvision
+
+-> ollama run llava
+-> python .\mnist_vision_llm.py
+
+
+| Step | Command                      | Purpose                   |
+| ---- | ---------------------------- | ------------------------- |
+| 1    | `ollama pull llava`          | Download the vision model |
+| 2    | `ollama list`                | Verify the model is ready |
+| 3    | `ollama run llava`           | Quick test                |
+| 4    | `python mnist_vision_llm.py` | Run your project          |
