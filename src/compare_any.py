@@ -9,7 +9,9 @@ print("Vision-LLM cost (USD):", llm["estimated_cost_usd"])
 '''
 
 import json, os
+from pathlib import Path
 from tabulate import tabulate  # pip install tabulate
+ROOT = Path(__file__).resolve().parents[1]
 
 def load_json(path):
     if not os.path.exists(path):
@@ -18,8 +20,8 @@ def load_json(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-cnn = load_json("mnist_cnn.json")
-llm = load_json("mnist_vision_llm.json")
+cnn = load_json(ROOT / "mnist_cnn.json")
+llm = load_json(ROOT / "mnist_vision_llm.json")
 
 if not cnn or not llm:
     exit()

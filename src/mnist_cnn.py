@@ -7,8 +7,8 @@ import json
 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 tfm = transforms.ToTensor()
-train = datasets.MNIST("data", train=True, download=True, transform=tfm)
-test  = datasets.MNIST("data", train=False, download=True, transform=tfm)
+train = datasets.MNIST(DATA_DIR, train=True, download=True, transform=tfm)
+test  = datasets.MNIST(DATA_DIR, train=False, download=True, transform=tfm)
 
 train_loader = DataLoader(train, batch_size=128, shuffle=True)
 test_loader  = DataLoader(test, batch_size=512)
@@ -58,6 +58,7 @@ json.dump({"model": "CNN", "accuracy": acc}, open("mnist_cnn.json", "w"))
 
 import json, os, time, random
 import torch, torch.nn as nn, torch.nn.functional as F
+from pathlib import Path
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from sklearn.metrics import accuracy_score
@@ -68,8 +69,10 @@ BATCH_TR   = 128
 BATCH_TE   = 512
 EPOCHS     = 3          # bump to 5–10 for max accuracy
 LR         = 1e-3
-OUT_JSON   = "mnist_cnn.json"
-OUT_WEIGHTS= "mnist_cnn.pth"
+ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = ROOT / "data"
+OUT_JSON   = ROOT / "mnist_cnn.json"
+OUT_WEIGHTS= ROOT / "mnist_cnn.pth"
 
 # ----- setup -----
 random.seed(SEED)
@@ -77,8 +80,8 @@ torch.manual_seed(SEED)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 tfm = transforms.ToTensor()  # MNIST already normalized to [0,1]
-train_ds = datasets.MNIST("data", train=True,  download=True, transform=tfm)
-test_ds  = datasets.MNIST("data", train=False, download=True, transform=tfm)
+train_ds = datasets.MNIST(DATA_DIR, train=True,  download=True, transform=tfm)
+test_ds  = datasets.MNIST(DATA_DIR, train=False, download=True, transform=tfm)
 
 train_loader = DataLoader(train_ds, batch_size=BATCH_TR, shuffle=True,  num_workers=0)
 test_loader  = DataLoader(test_ds,  batch_size=BATCH_TE, shuffle=False, num_workers=0)
