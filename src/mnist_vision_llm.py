@@ -3,6 +3,7 @@
 # Produces mnist_vision_llm.json so you can compare vs your CNN.
 
 import os, time, json, traceback
+from pathlib import Path
 import ollama
 import torchvision
 from torchvision import datasets, transforms
@@ -11,19 +12,24 @@ from sklearn.metrics import accuracy_score
 # ---- Config (override via environment variables if you like) ----
 MODEL     = os.getenv("OLLAMA_VISION_MODEL", "llava")   # e.g., "llava", "llava:13b"
 SUBSET_N  = int(os.getenv("MNIST_LLM_SAMPLES", "10"))   # small, fast demo
-PNG_DIR   = "mnist_png"
-OUT_JSON  = "mnist_vision_llm.json"
+
+ROOT       = Path(__file__).resolve().parents[1]
+DATA_DIR   = ROOT / "data"
+IMAGES_DIR = ROOT / "images"
+
+PNG_DIR   = IMAGES_DIR / "mnist_png"
+OUT_JSON  = ROOT / "mnist_vision_llm.json"
 
 def ensure_pngs(n):
     """Export n test MNIST images as PNGs and return (paths, labels)."""
     os.makedirs(PNG_DIR, exist_ok=True)
     tfm = transforms.ToTensor()
-    test = datasets.MNIST("data", train=False, download=True, transform=tfm)
+    test = datasets.MNIST(str(DATA_DIR), train=False, download=True, transform=tfm)
     n = min(n, len(test))
     paths, y_true = [], []
     for i in range(n):
         img, y = test[i]
-        path = os.path.join(PNG_DIR, f"{i}.png")
+        path = PNG_DIR / f"{i}.png"
         if not os.path.exists(path):
             torchvision.utils.save_image(img, path)
         paths.append(path)
